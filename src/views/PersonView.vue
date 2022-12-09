@@ -43,13 +43,13 @@ const cheakGender = (gender: string) => {
   return true;
 };
 
-const clearFrom = function () {
+const clearForm = function () {
   person.name = "";
   person.surname = "";
   person.gender = "";
   //Updating
   nextTick(() => {
-    //Update from finish
+    //Update form finish
     msg.name = "";
     msg.surname = "";
     msg.gender = "";
@@ -83,7 +83,7 @@ function doSubmit() {
   ) {
     const p = new Person(person.name, person.surname, person.gender);
     console.log(p);
-    clearFrom();
+    clearForm();
   }
 }
 </script>
