@@ -1,20 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { reactive } from "vue";
+const person = reactive({ name: "", surname: "", gender: "" });
+</script>
+
 <template>
   <div>
     <form>
       <label for="name">First Name</label>
-      <input type="text" id="name" placeholder="Please enter First name" />
+      <input type="text" id="name" v-model="person.name" autocomplete="off" />
 
       <label for="surname">Second Name</label>
-      <input type="text" id="surname" placeholder="Please enter Second name" />
+      <input
+        type="text"
+        id="surname"
+        v-model="person.surname"
+        autocomplete="off"
+      />
 
       <label for="gender">Gender</label>
-      <select id="gender">
+      <select id="gender" v-model="person.gender">
+        <option hidden selected>Select Gender</option>
         <option value="M">Male</option>
-        <option value="F">FeMale</option>
+        <option value="F">Female</option>
       </select>
       <input type="submit" value="Submit" />
     </form>
+    <pre>{{ person }}</pre>
   </div>
 </template>
 
@@ -25,7 +36,7 @@ select {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(62, 61, 61);
   border-radius: 6px;
   box-sizing: border-box;
 }
