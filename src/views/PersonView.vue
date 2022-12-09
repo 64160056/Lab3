@@ -29,6 +29,17 @@ const cheakGender = (gender: string) => {
   msg.gender = "";
   return true;
 };
+
+const clearFome = function () {
+  person.name = "";
+  person.surname = "";
+  person.gender = "";
+  msg.name = "";
+  msg.surname = "";
+  msg.gender = ""; 
+  
+};
+
 watch(
   () => person.name,
   (name) => {
@@ -55,6 +66,7 @@ function doSubmit() {
     cheakGender(person.gender)
   ) {
     console.log(person);
+    clearFome();
   }
 }
 </script>
