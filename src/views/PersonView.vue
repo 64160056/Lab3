@@ -1,6 +1,19 @@
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue";
-const person = reactive({ name: "", surname: "", gender: "" });
+import { ref, reactive, watch, nextTick } from "vue";
+class Person {
+  id: number;
+  name: string;
+  surname: string;
+  gender: string;
+  static lastId = 1;
+  constructor(name: string, surname: string, gender: string) {
+    this.id = Person.lastId++;
+    this.name = name;
+    this.surname = surname;
+    this.gender = gender;
+  }
+}
+const person = reactive<Person>({ id: -1, name: "", surname: "", gender: "" });
 const msg = reactive({ name: "", surname: "", gender: "" });
 const cheakName = function (name: string) {
   if (name.trim().length == 0) {
@@ -30,14 +43,17 @@ const cheakGender = (gender: string) => {
   return true;
 };
 
-const clearFome = function () {
+const clearFrom = function () {
   person.name = "";
   person.surname = "";
   person.gender = "";
-  msg.name = "";
-  msg.surname = "";
-  msg.gender = ""; 
-  
+  //Updating
+  nextTick(() => {
+    //Update from finish
+    msg.name = "";
+    msg.surname = "";
+    msg.gender = "";
+  });
 };
 
 watch(
@@ -65,8 +81,9 @@ function doSubmit() {
     cheakSurname(person.surname) &&
     cheakGender(person.gender)
   ) {
-    console.log(person);
-    clearFome();
+    const p = new Person(person.name, person.surname, person.gender);
+    console.log(p);
+    clearFrom();
   }
 }
 </script>
