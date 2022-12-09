@@ -16,6 +16,7 @@ class Person {
 const person = reactive<Person>({ id: -1, name: "", surname: "", gender: "" });
 const msg = reactive({ name: "", surname: "", gender: "" });
 const personList = ref<Person[]>([]);
+const showform = ref(false);
 const cheakName = function (name: string) {
   if (name.trim().length == 0) {
     msg.name = "First name is empty!!!";
@@ -86,12 +87,13 @@ function doSubmit() {
     personList.value.push(p);
     console.log(personList.value);
     clearForm();
+    showform.value = false;
   }
 }
 </script>
 
 <template>
-  <div>
+  <div v-if="showform">
     <form>
       <label for="name">First Name</label>
       <input type="text" id="name" v-model="person.name" autocomplete="off" />
@@ -116,19 +118,31 @@ function doSubmit() {
       <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
   </div>
-  <div>
+  <div v-if="!showform">
+    <div style="width: 100%; text-align: right">
+      <button style="width: 100px" @click="showform = !showform">Add</button>
+    </div>
     <table id="persons">
       <thead>
         <th>ID</th>
         <th>Frist Name</th>
         <th>Second Name</th>
         <th>Gender</th>
+        <th style="width: 250px">Operator</th>
       </thead>
       <tr v-for="(item, index) in personList" :key="index">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.surname }}</td>
         <td>{{ item.gender }}</td>
+        <td>
+          <button style="width: 100px; background-color: grey">Edit</button>
+          <button
+            style="width: 100px; margin-left: 1em; background-color: brown"
+          >
+            Delete
+          </button>
+        </td>
       </tr>
       <tr>
         <td
@@ -155,7 +169,8 @@ select {
   box-sizing: border-box;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button {
   width: 100%;
   background-color: #4caf50;
   color: rgb(255, 255, 255);
@@ -194,7 +209,7 @@ div {
 }
 
 #persons tr:nth-child(even) {
-  background-color: #7e7e7e;
+  background-color: #6e90a0;
 }
 
 #persons tr:hover {
