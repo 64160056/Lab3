@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 const person = reactive({ name: "", surname: "", gender: "" });
+function doSubmit() {
+  console.log(person);
+}
 </script>
 
 <template>
@@ -23,7 +26,7 @@ const person = reactive({ name: "", surname: "", gender: "" });
         <option value="M">Male</option>
         <option value="F">Female</option>
       </select>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
     <pre>{{ person }}</pre>
   </div>
