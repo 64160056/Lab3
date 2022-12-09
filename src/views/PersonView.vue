@@ -1,8 +1,61 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 const person = reactive({ name: "", surname: "", gender: "" });
+const msg = reactive({ name: "", surname: "", gender: "" });
+const cheakName = function (name: string) {
+  if (name.trim().length == 0) {
+    msg.name = "First name is empty!!!";
+
+    return false;
+  }
+  msg.name = "";
+  return true;
+};
+const cheakSurname = (surname: string) => {
+  if (surname.trim().length == 0) {
+    msg.surname = "Second name is empty!!!";
+
+    return false;
+  }
+  msg.surname = "";
+  return true;
+};
+const cheakGender = (gender: string) => {
+  if (gender.trim().length == 0) {
+    msg.gender = "Gender is empty!!!";
+
+    return false;
+  }
+  msg.gender = "";
+  return true;
+};
+watch(
+  () => person.name,
+  (name) => {
+    cheakName(name);
+  }
+);
+
+watch(
+  () => person.surname,
+  (surname) => {
+    cheakSurname(surname);
+  }
+);
+watch(
+  () => person.gender,
+  (gender) => {
+    cheakGender(gender);
+  }
+);
 function doSubmit() {
-  console.log(person);
+  if (
+    cheakName(person.name) &&
+    cheakSurname(person.surname) &&
+    cheakGender(person.gender)
+  ) {
+    console.log(person);
+  }
 }
 </script>
 
@@ -11,6 +64,7 @@ function doSubmit() {
     <form>
       <label for="name">First Name</label>
       <input type="text" id="name" v-model="person.name" autocomplete="off" />
+      <span class="error">{{ msg.name }}</span>
 
       <label for="surname">Second Name</label>
       <input
@@ -19,6 +73,7 @@ function doSubmit() {
         v-model="person.surname"
         autocomplete="off"
       />
+      <span class="error">{{ msg.surname }}</span>
 
       <label for="gender">Gender</label>
       <select id="gender" v-model="person.gender">
@@ -26,6 +81,7 @@ function doSubmit() {
         <option value="M">Male</option>
         <option value="F">Female</option>
       </select>
+      <span class="error">{{ msg.gender }}</span>
       <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
     <pre>{{ person }}</pre>
@@ -63,5 +119,11 @@ div {
   border-radius: 5px;
   background-color: #000000;
   padding: 20px;
+}
+
+.error {
+  color: red;
+  font-size: smaller;
+  display: block;
 }
 </style>
