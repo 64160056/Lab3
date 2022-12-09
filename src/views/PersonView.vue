@@ -116,7 +116,31 @@ function doSubmit() {
       <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
   </div>
-  <div></div>
+  <div>
+    <table id="persons">
+      <thead>
+        <th>ID</th>
+        <th>Frist Name</th>
+        <th>Second Name</th>
+        <th>Gender</th>
+      </thead>
+      <tr v-for="(item, index) in personList" :key="index">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.surname }}</td>
+        <td>{{ item.gender }}</td>
+      </tr>
+      <tr>
+        <td
+          colspan="4"
+          style="text-align: center"
+          v-if="personList.length === 0"
+        >
+          No Data
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <style scoped>
@@ -156,5 +180,32 @@ div {
   color: red;
   font-size: smaller;
   display: block;
+}
+#persons {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#persons td,
+#persons th {
+  border: 1px solid rgb(191, 191, 191);
+  padding: 8px;
+}
+
+#persons tr:nth-child(even) {
+  background-color: #7e7e7e;
+}
+
+#persons tr:hover {
+  background-color: rgb(101, 150, 88);
+}
+
+#persons th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: rgb(255, 255, 255);
 }
 </style>
