@@ -83,13 +83,27 @@ function doSubmit() {
     cheakSurname(person.surname) &&
     cheakGender(person.gender)
   ) {
-    const p = new Person(person.name, person.surname, person.gender);
-    personList.value.push(p);
-    console.log(personList.value);
+    if (person.id < 0) {
+      const p = new Person(person.name, person.surname, person.gender);
+      personList.value.push(p);
+    } else {
+      const index = personList.value.findIndex((item) => item.id === person.id);
+      personList.value[index].name = person.name;
+      personList.value[index].surname = person.surname;
+      personList.value[index].gender = person.gender;
+    }
     clearForm();
     showform.value = false;
   }
 }
+const doEdit = function (p: Person) {
+  person.name = p.name;
+  person.surname = p.surname;
+  person.gender = p.gender;
+  person.id = p.id;
+  showform.value = true;
+};
+const doDelete = function()
 </script>
 
 <template>
@@ -136,7 +150,12 @@ function doSubmit() {
         <td>{{ item.surname }}</td>
         <td>{{ item.gender }}</td>
         <td>
-          <button style="width: 100px; background-color: grey">Edit</button>
+          <button
+            style="width: 100px; background-color: grey"
+            @click="doEdit(item)"
+          >
+            Edit
+          </button>
           <button
             style="width: 100px; margin-left: 1em; background-color: brown"
           >
@@ -146,7 +165,7 @@ function doSubmit() {
       </tr>
       <tr>
         <td
-          colspan="4"
+          colspan="5"
           style="text-align: center"
           v-if="personList.length === 0"
         >
@@ -208,7 +227,7 @@ div {
   padding: 8px;
 }
 
-#persons tr:nth-child(even) {
+#persons tr:nth-child() {
   background-color: #6e90a0;
 }
 
