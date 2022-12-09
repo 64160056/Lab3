@@ -15,6 +15,7 @@ class Person {
 }
 const person = reactive<Person>({ id: -1, name: "", surname: "", gender: "" });
 const msg = reactive({ name: "", surname: "", gender: "" });
+const personList = ref<Person[]>([]);
 const cheakName = function (name: string) {
   if (name.trim().length == 0) {
     msg.name = "First name is empty!!!";
@@ -82,7 +83,8 @@ function doSubmit() {
     cheakGender(person.gender)
   ) {
     const p = new Person(person.name, person.surname, person.gender);
-    console.log(p);
+    personList.value.push(p);
+    console.log(personList.value);
     clearForm();
   }
 }
@@ -113,8 +115,8 @@ function doSubmit() {
       <span class="error">{{ msg.gender }}</span>
       <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
-    <pre>{{ person }}</pre>
   </div>
+  <div></div>
 </template>
 
 <style scoped>
