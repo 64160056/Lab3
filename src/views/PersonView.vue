@@ -103,11 +103,14 @@ const doEdit = function (p: Person) {
   person.id = p.id;
   showform.value = true;
 };
-const doDelete = function()
+const doDelete = function (p: Person) {
+  const index = personList.value.findIndex((item) => item.id === p.id);
+  personList.value.splice(index, 1);
+};
 </script>
 
 <template>
-  <div v-if="showform">
+  <div v-if="showform" class="form">
     <form>
       <label for="name">First Name</label>
       <input type="text" id="name" v-model="person.name" autocomplete="off" />
@@ -157,7 +160,8 @@ const doDelete = function()
             Edit
           </button>
           <button
-            style="width: 100px; margin-left: 1em; background-color: brown"
+            style="width: 100px; margin-left: 1em; background-color: red"
+            @click="doDelete(item)"
           >
             Delete
           </button>
@@ -204,7 +208,7 @@ input[type="submit"]:hover {
   background-color: #45a049;
 }
 
-div {
+div.form {
   border-radius: 5px;
   background-color: #000000;
   padding: 20px;
