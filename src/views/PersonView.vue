@@ -49,6 +49,7 @@ const clearForm = function () {
   person.name = "";
   person.surname = "";
   person.gender = "";
+  person.id = -1;
   //Updating
   nextTick(() => {
     //Update form finish
@@ -110,6 +111,7 @@ const doDelete = function (p: Person) {
 </script>
 
 <template>
+  <h2>Person</h2>
   <div v-if="showform" class="form">
     <form>
       <label for="name">First Name</label>
